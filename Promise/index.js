@@ -194,6 +194,48 @@
     
 // })
 
+// let promise = new Promise(function(res,rej){
+//     let success = false;
+//     setTimeout(()=>{
+//         if(success){
+//         res("done")
+//     }else{
+//         rej("failed")
+//     }
+//     },5000)
+    
+// })
 
+// promise.then(function(res){
+//     console.log(res);
+    
+// })
+
+// promise.catch(function(rej){
+//     console.log(rej);
+    
+// })
+
+// let promise = new Promise(function(res,rej){
+//     let success = true;
+//     setTimeout(()=>{
+//          if(success){
+//         res("done")
+//     }else{
+//         rej("failed")
+//     }
+//     },5000)
+   
+// })
+
+// promise.then(function(res){
+//     console.log(res);
+    
+// })
+
+// promise.catch(function(rej){
+//     console.log(rej);
+    
+// })
 
 
