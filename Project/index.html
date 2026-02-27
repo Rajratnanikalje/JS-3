@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Clock</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(-45deg,#667eea,#764ba2,#6a11cb,#2575fc);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+    padding:20px;
+    
+    /* IMPORTANT FIX */
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;   /* center ki jagah */
+    overflow-y:auto;          /* scroll allow */
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+body.dark{
+    background:linear-gradient(-45deg,#000000,#0f2027,#203a43,#2c5364);
+    background-size:400% 400%;
+}
+
+.wrapper{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+}
+
+/* Greeting */
+#greeting{
+    font-size:24px;
+    font-weight:bold;
+    color:white;
+    text-align:center;
+}
+
+/* Date */
+#dateDay{
+    font-size:18px;
+    color:white;
+    text-align:center;
+}
+
+/* Clock */
+#clock{
+    position:relative;
+    display:flex;
+    gap:20px;
+    padding:40px 30px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    border:2px solid rgba(255,255,255,0.2);
+    animation:borderGlow 3s infinite alternate;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+@keyframes borderGlow{
+    from{box-shadow:0 0 20px #fff;}
+    to{box-shadow:0 0 40px #00f7ff;}
+}
+
+#clock div{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:110px;
+    height:110px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.2);
+}
+
+#hrs,#min,#sec{
+    font-size:40px;
+    font-weight:bold;
+    color:white;
+}
+
+.text{
+    font-size:12px;
+    color:white;
+}
+
+#clock > span{
+    font-size:35px;
+    font-weight:bold;
+    color:white;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    0%,100%{opacity:1;}
+    50%{opacity:0;}
+}
+
+/* Toggle */
+button{
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    font-weight:bold;
+    cursor:pointer;
+    background:white;
+}
+
+/* Responsive */
+@media(max-width:500px){
+    #clock{
+        flex-direction:column;
+    }
+    #clock > span{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div id="greeting"></div>
+    <div id="dateDay"></div>
+
+    <div id="clock">
+        <div>
+            <span id="hrs">00</span>
+            <span class="text">Hours</span>
+        </div>
+
+        <span>:</span>
+
+        <div>
+            <span id="min">00</span>
+            <span class="text">Minutes</span>
+        </div>
+
+        <span>:</span>
+
+        <div>
+            <span id="sec">00</span>
+            <span class="text">Seconds</span>
+        </div>
+    </div>
+
+    <button onclick="toggleMode()">Toggle Dark Mode</button>
+
+</div>
+
+<script>
+let hrs=document.getElementById("hrs")
+let min=document.getElementById("min")
+let sec=document.getElementById("sec")
+let dateDay=document.getElementById("dateDay")
+let greeting=document.getElementById("greeting")
+
+function updateTime(){
+    let now=new Date()
+    let hour=now.getHours()
+
+    hrs.innerHTML=(hour<10?"0":"")+hour
+    min.innerHTML=(now.getMinutes()<10?"0":"")+now.getMinutes()
+    sec.innerHTML=(now.getSeconds()<10?"0":"")+now.getSeconds()
+
+    let options={weekday:'long',year:'numeric',month:'long',day:'numeric'}
+    dateDay.innerHTML=now.toLocaleDateString("en-IN",options)
+
+    if(hour<12){
+        greeting.innerHTML="Good Morning ☀️"
+    }else if(hour<18){
+        greeting.innerHTML="Good Afternoon 🌤"
+    }else{
+        greeting.innerHTML="Good Evening 🌙"
+    }
+}
+
+updateTime()
+setInterval(updateTime,1000)
+
+function toggleMode(){
+    document.body.classList.toggle("dark")
+}
+</script>
+
+</body>
+</html>
