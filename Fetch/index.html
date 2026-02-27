@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="main">
+
+    </div>
+</body>
+<script>
+    let main = document.getElementById("main")
+    let api = "https://jsonplaceholder.typicode.com/users"
+
+    let getData = fetch(api)
+
+    getData.then((res)=>{
+        let b = res.json()
+        b.then((data)=>{
+            console.log(data);
+            display(data)
+        })
+    })
+
+    function display(data){
+        data.map((el)=>{
+            let name = document.createElement("h2")
+            name.innerText = el.name
+            
+            let username = document.createElement("h2")
+            username.innerText = el.username
+
+            let email = document.createElement("h2")
+            email.innerText = el.email
+
+            let address = document.createElement("h3")
+            address.innerText = el.address
+
+            let line = document.createElement("hr")
+            let div = document.createElement("div")
+
+            div.append(username,name,email,address,line)
+            main.append(div)
+        })
+    }
+
+</script>
+</html>
