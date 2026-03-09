@@ -3,28 +3,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #loader{
+            text-align: center;
+            
+        }
+
+        #loader>img{
+            border-radius: 50px;
+            height: 95%;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 
     <h1>Product Data</h1>
 
-    <div id="main">
+    <div id="main"></div>
 
+    <div id="loader">
+        <img src="https://i.pinimg.com/originals/2e/9c/68/2e9c6878eae5bbcdaa2d07ed4dbd79b8.gif" alt="">
     </div>
+
 </body>
 <script>
     let api = "https://fakestoreapi.com/products"
     let main = document.getElementById("main")
+    let loader = document.getElementById("loader")
 
+    
     const getData = async()=>{
+        try {
+        loader.style.display="Block"
         let res = await fetch(api)
         let data = await res.json()
         display(data)
+        loader.style.display="none"
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     const display =(products)=>{
         products.map(({title,image,price})=>{
-            main.innerHTML = `
+            main.innerHTML += `
             <div>
                 <img src ="${image}"/>
                 <h1>${title}</h1>
@@ -33,6 +57,10 @@
             ;
         })
     }
-    getData()
+
+    setTimeout(() => {
+        getData()
+    }, 3000);
+    
 </script>
 </html>
